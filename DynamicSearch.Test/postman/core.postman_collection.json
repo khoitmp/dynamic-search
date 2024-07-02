@@ -1,0 +1,792 @@
+{
+	"info": {
+		"_postman_id": "78b24db1-1b71-4cdb-ab67-3f40e976c8a0",
+		"name": "DeviceService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34868686"
+	},
+	"item": [
+		{
+			"name": "Search Devices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (full) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (full) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(5);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"sorts\": \"id=desc,name=asc\",\n    \"fields\": [\"id\", \"name\", \"type\"],\n    \"filter\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (EQUALS)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (EQUALS) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (EQUALS) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(1);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"name\",\n        \"queryType\": \"text\",\n        \"operation\": \"eq\",\n        \"queryValue\": \"Device 1\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (NOT_EQUALS)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (NOT_EQUALS) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (NOT_EQUALS) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(4);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"name\",\n        \"queryType\": \"text\",\n        \"operation\": \"neq\",\n        \"queryValue\": \"Device 1\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (IN)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (IN) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (IN) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(2);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"name\",\n        \"queryType\": \"text\",\n        \"operation\": \"in\",\n        \"queryValue\": \"[Device 1,Device 2]\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (NOT_IN)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (NOT_IN) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (NOT_IN) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(3);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"name\",\n        \"queryType\": \"text\",\n        \"operation\": \"nin\",\n        \"queryValue\": \"[Device 1,Device 2]\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (LESS_THAN)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (LESS_THAN) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (LESS_THAN) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(3);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"createdUtc\",\n        \"queryType\": \"datetime\",\n        \"operation\": \"lte\",\n        \"queryValue\": \"2024-01-03T00:00:00:0000\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (LESS_THAN_OR_EQUALS)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (LESS_THAN_OR_EQUALS) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (LESS_THAN_OR_EQUALS) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(2);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"createdUtc\",\n        \"queryType\": \"datetime\",\n        \"operation\": \"lt\",\n        \"queryValue\": \"2024-01-03T00:00:00:0000\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (GREATER_THAN)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (GREATER_THAN) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (GREATER_THAN) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(2);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"createdUtc\",\n        \"queryType\": \"datetime\",\n        \"operation\": \"gt\",\n        \"queryValue\": \"2024-01-03T00:00:00:0000\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (GREATER_THAN_OR_EQUALS)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (GREATER_THAN_OR_EQUALS) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (GREATER_THAN_OR_EQUALS) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(3);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"createdUtc\",\n        \"queryType\": \"datetime\",\n        \"operation\": \"gte\",\n        \"queryValue\": \"2024-01-03T00:00:00:0000\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (CONTAINS - Ref)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (CONTAINS) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (CONTAINS) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(1);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"type.name\",\n        \"queryType\": \"text\",\n        \"operation\": \"contains\",\n        \"queryValue\": \"tat\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (NOT_CONTAINS - Ref)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (NOT_CONTAINS) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (NOT_CONTAINS) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(4);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"type.name\",\n        \"queryType\": \"text\",\n        \"operation\": \"ncontains\",\n        \"queryValue\": \"tat\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (BETWEEN - Ref)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (BETWEEN) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (BETWEEN) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(2);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"type.createdUtc\",\n        \"queryType\": \"datetime\",\n        \"operation\": \"between\",\n        \"queryValue\": \"[2024-01-01T00:00:00:0000,2024-01-02T00:00:00:0000]\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (NOT_BETWEEN - Ref)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (NOT_BETWEEN) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (NOT_BETWEEN) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(3);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"type.createdUtc\",\n        \"queryType\": \"datetime\",\n        \"operation\": \"nbetween\",\n        \"queryValue\": \"[2024-01-01T00:00:00:0000,2024-01-02T00:00:00:0000]\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (STARTS_WITH - Ref)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (STARTS_WITH) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (STARTS_WITH) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(1);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"type.name\",\n        \"queryType\": \"text\",\n        \"operation\": \"sw\",\n        \"queryValue\": \"S\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (NOT_STARTS_WITH - Ref)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (NOT_STARTS_WITH) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (NOT_STARTS_WITH) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(4);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"queryKey\": \"type.name\",\n        \"queryType\": \"text\",\n        \"operation\": \"nsw\",\n        \"queryValue\": \"S\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (ENDS_WITH - Ref - Multiple)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (ENDS_WITH) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (ENDS_WITH) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(1);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"and\": [\n            {\n                \"queryKey\": \"name\",\n                \"queryType\": \"text\",\n                \"operation\": \"ew\",\n                \"queryValue\": \"1\"\n            },\n            {\n                \"queryKey\": \"type.name\",\n                \"queryType\": \"text\",\n                \"operation\": \"ew\",\n                \"queryValue\": \"c\"\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Devices (NOT_ENDS_WITH - Ref - Multiple)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Search Devices (NOT_ENDS_WITH) success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Search Devices (NOT_ENDS_WITH) has response\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.be.equals(3);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pageIndex\": 0,\n    \"pageSize\": 100,\n    \"filter\": {\n        \"or\": [\n            {\n                \"queryKey\": \"type.name\",\n                \"queryType\": \"text\",\n                \"operation\": \"new\",\n                \"queryValue\": \"c\"\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/dev/devices/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"dev",
+						"devices",
+						"search"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
