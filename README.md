@@ -204,6 +204,30 @@
 }
 ```
 
+- If you want to filter on one-many object
+```json
+{
+    "pageIndex": 0,
+    "pageSize": 100,
+    "filter": {
+        "and": [
+            {
+                "queryKey": "isVisible",
+                "queryType": "boolean",
+                "operation": "eq",
+                "queryValue": true
+            },
+            {
+                "queryKey": "Templates.Any(x => x.Id.ToString() == \"<template_id>\")",
+                "queryType": "boolean",
+                "operation": "eq",
+                "queryValue": true
+            }
+        ]
+    }
+}
+```
+
 ## 3. Implementation
 - Please refer project [DynamicSearch.Sample](./DynamicSearch.Sample/src/Core.Application/Services/DeviceService.cs)
 
