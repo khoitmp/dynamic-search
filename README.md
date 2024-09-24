@@ -234,9 +234,12 @@
 ## 4. Unit Testing
 ### Construct containers prepare for running UT
 ```yml
+# Construct database migration
 docker compose -f docker-compose.yml -f development.yml build
 docker compose -f docker-compose.yml -f development.yml up -d
-docker compose -f docker-compose.yml -f development.yml down
+
+# Run tests
+dotnet test
 ```
 
 ### Run UT to test the Dynamic Search through the containers

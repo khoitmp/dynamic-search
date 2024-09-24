@@ -1,8 +1,4 @@
 services:
-  core-service:
-    build: 
-      context: .
-      dockerfile: Dockerfile
   core-migration:
     build: 
       context: .

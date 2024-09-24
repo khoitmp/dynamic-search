@@ -7,9 +7,10 @@ global using Microsoft.Extensions.DependencyInjection;
 
 global using MediatR;
 
-global using DynamicSearch.Lib.Model;
-global using DynamicSearch.Lib.Service;
-global using DynamicSearch.Lib.Extension;
+global using DynamicSearch.EfCore.Model;
+global using DynamicSearch.EfCore.Service;
+global using DynamicSearch.EfCore.Extension;
+global using DynamicSearch.EfCore.Interface;
 global using GenericRepository.Lib.Interface;
 
 global using Core.Domain.Entity;
@@ -18,4 +19,3 @@ global using Core.Application.Service;
 global using Core.Application.Command;
 global using Core.Application.Service.Interface;
 global using Core.Application.Repository.Interface;
-global using DynamicSearch.Lib.Interface;
