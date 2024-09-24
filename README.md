@@ -1,8 +1,10 @@
 # Dynamic Search
-- A dynamic searching library which built from Linq.Dynamic.Core, main features including:
-  - Paging
-  - Sort
-  - Filter
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=develop&repo=822938906&machine=standardLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=EastUs)
+
+[![NuGet](https://img.shields.io/nuget/v/DynamicSearch.EfCore)](https://www.nuget.org/packages/DynamicSearch.EfCore)
+
+> Dynamic Search is a library that built from Linq.Dynamic.Core, main features including paging, sorting, filtering
 
 ## 1. Compoments
 ### 1.1. The request payload
@@ -240,11 +242,6 @@ docker compose -f docker-compose.yml -f development.yml up -d
 
 # Run tests
 dotnet test
-```
-
-### Run UT to test the Dynamic Search through the containers
-```
-newman run -k -e ./DynamicSearch.Test/postman/docker.postman_environment.json ./DynamicSearch.Test/postman/core.postman_collection.json
 ```
 
 ## 5. Push
