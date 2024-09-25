@@ -1,10 +1,10 @@
-namespace DynamicSearch.EfCore.Extension;
+namespace DynamicSearch.Dapper.Extension;
 
 public static class ServiceExtension
 {
-    public static void AddDynamicSearch(this IServiceCollection serviceCollection)
+    public static void AddDapperFrameworkServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddSingleton<IQueryCompiler, QueryCompiler>();
+        serviceCollection.AddSingleton<IFilterCompiler, SqlFilterCompiler>();
         serviceCollection.AddSingleton<EqualsOperationBuilder>();
         serviceCollection.AddSingleton<NotEqualsOperationBuilder>();
         serviceCollection.AddSingleton<InOperationBuilder>();
@@ -15,7 +15,6 @@ public static class ServiceExtension
         serviceCollection.AddSingleton<GreaterThanOrEqualsOperationBuilder>();
         serviceCollection.AddSingleton<ContainsOperationBuilder>();
         serviceCollection.AddSingleton<NotContainsOperationBuilder>();
-        serviceCollection.AddSingleton<AgoOperationBuilder>();
         serviceCollection.AddSingleton<BetweenOperationBuilder>();
         serviceCollection.AddSingleton<NotBetweenOperationBuilder>();
         serviceCollection.AddSingleton<StartsWithOperationBuilder>();
@@ -26,12 +25,13 @@ public static class ServiceExtension
         serviceCollection.AddSingleton<IValueParser<double>, NumbericParser>();
         serviceCollection.AddSingleton<IValueParser<bool>, BoolParser>();
         serviceCollection.AddSingleton<IValueParser<Guid>, GuidParser>();
-        serviceCollection.AddSingleton<IValueArrayParser<Guid>, GuidArrayParser>();
         serviceCollection.AddSingleton<IValueParser<DateTime>, DateTimeParser>();
+        serviceCollection.AddSingleton<IValueArrayParser<Guid>, GuidArrayParser>();
         serviceCollection.AddSingleton<IValueArrayParser<string>, StringArrayParser>();
         serviceCollection.AddSingleton<IValueArrayParser<double>, NumbericArrayParser>();
         serviceCollection.AddSingleton<IValueArrayParser<DateTime>, DateTimeArrayParser>();
         serviceCollection.AddSingleton(GetOperationServices);
+        serviceCollection.AddScoped<IQueryService, DapperQueryService>();
     }
 
     private static IDictionary<string, IOperationBuilder> GetOperationServices(IServiceProvider service)
@@ -48,7 +48,6 @@ public static class ServiceExtension
             { Operations.GREATER_THAN_OR_EQUALS, service.GetRequiredService<GreaterThanOrEqualsOperationBuilder>() },
             { Operations.CONTAINS, service.GetRequiredService<ContainsOperationBuilder>() },
             { Operations.NOT_CONTAINS, service.GetRequiredService<NotContainsOperationBuilder>() },
-            { Operations.AGO, service.GetRequiredService<AgoOperationBuilder>() },
             { Operations.BETWEEN, service.GetRequiredService<BetweenOperationBuilder>() },
             { Operations.NOT_BETWEEN, service.GetRequiredService<NotBetweenOperationBuilder>() },
             { Operations.STARTS_WITH, service.GetRequiredService<StartsWithOperationBuilder>() },

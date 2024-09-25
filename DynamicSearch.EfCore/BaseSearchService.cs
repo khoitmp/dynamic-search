@@ -33,7 +33,7 @@ public abstract class BaseSearchService<TEntity, TKey, TCriteria, TResponse> : I
         return response;
     }
 
-    public virtual Task<BaseSearchResponse<TResponse>> SearchWithSecurityAsync(TCriteria criteria, IList<FilterCriteria> additionalFilters)
+    public virtual Task<BaseSearchResponse<TResponse>> SearchAsync(TCriteria criteria, IList<FilterCriteria> additionalFilters)
     {
         var filterArray = new JArray();
         var originFilter = criteria.Filter;

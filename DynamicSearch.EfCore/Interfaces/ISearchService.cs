@@ -6,5 +6,5 @@ public interface ISearchService<TEntity, TKey, TCriteria, TResponse>
         where TResponse : class, new()
 {
     Task<BaseSearchResponse<TResponse>> SearchAsync(TCriteria criteria);
-    Task<BaseSearchResponse<TResponse>> SearchWithSecurityAsync(TCriteria criteria, IList<FilterCriteria> additionalFilters);
+    Task<BaseSearchResponse<TResponse>> SearchAsync(TCriteria criteria, IList<FilterCriteria> additionalFilters);
 }

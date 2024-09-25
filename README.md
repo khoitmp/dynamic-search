@@ -4,22 +4,35 @@
 
 [![NuGet](https://img.shields.io/nuget/v/DynamicSearch.EfCore)](https://www.nuget.org/packages/DynamicSearch.EfCore)
 
-> Dynamic Search is a library that built from Linq.Dynamic.Core, main features including paging, sorting, filtering
+> Dynamic Search is a library that built from Linq.Dynamic.Core, main features including paging, sorting, and filtering
 
-## 1. Compoments
-### 1.1. The request payload
-- Search without filter
+## 1. Configuration
+- [ASP.NET Core DI](./DynamicSearch.Sample/src/Core.Application/Extensions/ApplicationExtension.cs)
+- [Register Service](./DynamicSearch.Sample/src/Core.Application/Services/DeviceService.cs)
+- [Use Service](./DynamicSearch.Sample/src/Core.Application/Devices/Handlers/SearchDevicesRequestHandler.cs)
+- [Use Controller](./DynamicSearch.Sample/src/Core.Api/Controllers/DevicesController.cs)
+
+## 2. Usage
+### 2.1. The request payload
+- Search with paging
+```json
+{
+    "pageIndex": 0,     // Page index starts from 0
+    "pageSize": 100,    // Page size default is 20
+}
+```
+
+- Search with sorting
 ```json
 {
     "pageIndex": 0,     // Page index starts from 0
     "pageSize": 100,    // Page size default is 20
     "sorts": "id=desc,name=asc",
-    "fields": ["id", "name", "type"],
-    "filter": null
+    "fields": ["id", "name", "type"]
 }
 ```
 
-- Search with single filter
+- Search with single filtering
 ```json
 {
     "pageIndex": 0,
@@ -35,7 +48,7 @@
 }
 ```
 
-- Search with multiple filter (and/or)
+- Search with multiple filtering (and/or)
 ```json
 {
     "pageIndex": 0,
@@ -61,7 +74,7 @@
 }
 ```
 
-### 1.2. The filter
+### 2.2. The filter
 #### query_key
 - The key of an object in the response when calling a search API
 
@@ -69,7 +82,6 @@
 - The value we want to search
 
 #### query_type
-
 | Value             | Description                 |
 | ----------------- | --------------------------- |
 | text              | Text data type              |
@@ -83,7 +95,6 @@
 | nullable_datetime | Nullable datetime data type |
 
 #### operation
-
 | Value     | Description            |
 | --------- | ---------------------- |
 | eq        | Equals                 |
@@ -104,7 +115,7 @@
 | ew        | Ends with              |
 | new       | Not ends with          |
 
-## 2. Sample
+### 2.3. Sample
 - For example you have a reponse from a search API as below. Currently, the response returning all data
 ```json
 {
@@ -230,11 +241,7 @@
 }
 ```
 
-## 3. Implementation
-- Please refer project [DynamicSearch.Sample](./DynamicSearch.Sample/src/Core.Application/Services/DeviceService.cs)
-
-## 4. Unit Testing
-### Construct containers prepare for running UT
+## 3. Unit Testing
 ```yml
 # Construct database migration
 docker compose -f docker-compose.yml -f development.yml build
@@ -244,7 +251,7 @@ docker compose -f docker-compose.yml -f development.yml up -d
 dotnet test
 ```
 
-## 5. Push
+## 4. Pushing
 ```sh
 dotnet build
 dotnet pack
