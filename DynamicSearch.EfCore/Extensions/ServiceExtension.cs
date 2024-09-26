@@ -2,7 +2,7 @@ namespace DynamicSearch.EfCore.Extension;
 
 public static class ServiceExtension
 {
-    public static void AddDynamicSearch(this IServiceCollection serviceCollection)
+    public static void AddEfCoreDynamicSearch(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<IQueryCompiler, QueryCompiler>();
         serviceCollection.AddSingleton<EqualsOperationBuilder>();

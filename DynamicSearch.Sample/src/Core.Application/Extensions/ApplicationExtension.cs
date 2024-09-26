@@ -1,4 +1,4 @@
-namespace Core.ApplicationExtension.Extension;
+namespace Core.Application.Extension;
 
 public static class ApplicationExtension
 {
@@ -7,7 +7,8 @@ public static class ApplicationExtension
     public static void AddApplicationServices(this IServiceCollection serviceCollection)
     {
         // Lib services
-        serviceCollection.AddDynamicSearch();
+        serviceCollection.AddEfCoreDynamicSearch();
+        serviceCollection.AddDapperDynamicSearch();
         serviceCollection.AddMediatR(typeof(ApplicationExtension).GetTypeInfo().Assembly);
 
         // Internal services

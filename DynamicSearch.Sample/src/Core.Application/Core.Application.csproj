@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Core.Domain\Core.Domain.csproj" />
     <ProjectReference Include="..\..\..\DynamicSearch.EfCore\DynamicSearch.EfCore.csproj" />
+    <ProjectReference Include="..\..\..\DynamicSearch.Dapper\DynamicSearch.Dapper.csproj" />
   </ItemGroup>
 
 </Project>

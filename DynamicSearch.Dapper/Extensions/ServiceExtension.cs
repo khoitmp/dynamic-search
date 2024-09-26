@@ -2,7 +2,7 @@ namespace DynamicSearch.Dapper.Extension;
 
 public static class ServiceExtension
 {
-    public static void AddDapperFrameworkServices(this IServiceCollection serviceCollection)
+    public static void AddDapperDynamicSearch(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<IFilterCompiler, SqlFilterCompiler>();
         serviceCollection.AddSingleton<EqualsOperationBuilder>();
