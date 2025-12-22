@@ -10,14 +10,14 @@ global using Microsoft.Extensions.Configuration;
 
 global using Xunit;
 global using Xunit.Abstractions;
-global using Newtonsoft.Json;
-global using Newtonsoft.Json.Linq;
+global using System.Text.Json;
+global using System.Text.Json.Nodes;
 global using Testcontainers.PostgreSql;
 global using DotNet.Testcontainers.Builders;
 global using DotNet.Testcontainers.Networks;
 
+global using Kernel.Lib.Constant;
 global using DynamicSearch.EfCore.Model;
-global using DynamicSearch.Test.Integration;
 
 global using Core.Api;
 global using Core.Application.Model;

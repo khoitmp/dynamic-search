@@ -7,48 +7,25 @@ public static class JsonExtension
 {
     /// <summary>
     /// Uniform rules to control over the json object
-    /// </summary>    
-    private static JsonSerializer _js = new JsonSerializer
-    {
-        NullValueHandling = NullValueHandling.Ignore,
-        ReferenceLoopHandling = ReferenceLoopHandling.Error,
-        DateFormatString = Defaults.DEFAULT_FULL_DATETIME_FORMAT,
-        DateParseHandling = DateParseHandling.None,
-        ContractResolver = new CamelCasePropertyNamesContractResolver()
-    };
-
-    /// <summary>
-    /// Uniform rules to control over the json object
     /// </summary>
-    private static JsonSerializerSettings _jss = new JsonSerializerSettings
+    private static JsonSerializerOptions _jso = new JsonSerializerOptions
     {
-        NullValueHandling = NullValueHandling.Ignore,
-        ReferenceLoopHandling = ReferenceLoopHandling.Error,
-        DateFormatString = Defaults.DEFAULT_FULL_DATETIME_FORMAT,
-        DateParseHandling = DateParseHandling.None,
-        ContractResolver = new CamelCasePropertyNamesContractResolver()
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNameCaseInsensitive = true,
+        ReferenceHandler = ReferenceHandler.IgnoreCycles,
+        WriteIndented = false,
+        Converters = { new JsonStringEnumConverter() }
     };
 
-    public static JsonSerializer JsonSerializer => _js;
-    public static JsonSerializerSettings JsonSerializerSetting => _jss;
+    public static JsonSerializerOptions JsonSerializerOptions => _jso;
 
     /// <summary>
     /// Serialize an object to bytes
     /// </summary>
     public static byte[] Serialize(this object input)
     {
-        byte[] output = default;
-
-        using (var ms = new MemoryStream())
-        using (var sw = new StreamWriter(ms))
-        using (var jtw = new JsonTextWriter(sw))
-        {
-            JsonSerializer.Serialize(jtw, input);
-            jtw.Flush();
-            output = ms.ToArray();
-        }
-
-        return output;
+        return JsonSerializer.SerializeToUtf8Bytes(input, _jso);
     }
 
     /// <summary>
@@ -56,16 +33,7 @@ public static class JsonExtension
     /// </summary>
     public static T Deserialize<T>(this byte[] input)
     {
-        T output = default;
-
-        using (var ms = new MemoryStream(input))
-        using (var sr = new StreamReader(ms))
-        using (var jtr = new JsonTextReader(sr))
-        {
-            output = JsonSerializer.Deserialize<T>(jtr);
-        }
-
-        return output;
+        return JsonSerializer.Deserialize<T>(input, _jso);
     }
 
     /// <summary>
@@ -73,8 +41,7 @@ public static class JsonExtension
     /// </summary>
     public static string ToJson(this object input)
     {
-        var output = Serialize(input);
-        return Encoding.UTF8.GetString(output);
+        return JsonSerializer.Serialize(input, _jso);
     }
 
     /// <summary>
@@ -82,8 +49,7 @@ public static class JsonExtension
     /// </summary>
     public static T ToObject<T>(this string input)
     {
-        var output = Encoding.UTF8.GetBytes(input);
-        return Deserialize<T>(output);
+        return JsonSerializer.Deserialize<T>(input, _jso);
     }
 
     /// <summary>

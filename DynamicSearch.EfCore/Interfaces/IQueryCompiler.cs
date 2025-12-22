@@ -17,5 +17,5 @@ public interface IQueryCompiler
     /// <param name="count"></param>
     /// <param name="callback"></param>
     /// <returns></returns>
-    (string Query, string[] Tokens, object[] Values) Compile(JObject filter, ref int count, Action<string[]> callback = null);
+    (string Query, string[] Tokens, object[] Values) Compile(JsonObject filter, ref int count, Action<string[]> callback = null);
 }

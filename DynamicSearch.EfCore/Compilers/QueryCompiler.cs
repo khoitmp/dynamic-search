@@ -9,7 +9,7 @@ internal class QueryCompiler : IQueryCompiler
         SupportedOperations = supportedOperations;
     }
 
-    public (string Query, string[] Tokens, object[] Values) Compile(JObject filter, ref int count, Action<string[]> callback = null)
+    public (string Query, string[] Tokens, object[] Values) Compile(JsonObject filter, ref int count, Action<string[]> callback = null)
     {
         if (filter.Count != 1)
         {
@@ -23,7 +23,7 @@ internal class QueryCompiler : IQueryCompiler
                 }
             */
 
-            var filterCriteria = filter.ToObject<FilterCriteria>(Defaults.JsonSerializer);
+            var filterCriteria = JsonSerializer.Deserialize<FilterCriteria>(filter, Defaults.JsonSerializerOptions);
 
             if (!SupportedOperations.ContainsKey(filterCriteria.Operation))
             {
@@ -70,7 +70,7 @@ internal class QueryCompiler : IQueryCompiler
                 }
             */
 
-            var dic = filter.ToObject<IDictionary<string, JArray>>(Defaults.JsonSerializer);
+            var dic = JsonSerializer.Deserialize<IDictionary<string, JsonArray>>(filter, Defaults.JsonSerializerOptions);
             var listQuery = new List<string>();
             var listToken = new List<string>();
             var listValue = new List<object>();
@@ -80,7 +80,7 @@ internal class QueryCompiler : IQueryCompiler
             {
                 foreach (var v in kv.Value)
                 {
-                    var rs = Compile(v as JObject, ref count, callback);
+                    var rs = Compile(v.AsObject(), ref count, callback);
                     if (rs.Values.Length != rs.Tokens.Length)
                     {
                         throw new Exception("Number of values & tokens must be equals");

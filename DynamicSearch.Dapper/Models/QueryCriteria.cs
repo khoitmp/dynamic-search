@@ -4,6 +4,6 @@ public class QueryCriteria
 {
     public int PageIndex { get; set; }
     public int PageSize { get; set; }
-    public JObject Filter { get; set; }
+    public JsonObject Filter { get; set; }
     public string Sorts { get; set; }
 }

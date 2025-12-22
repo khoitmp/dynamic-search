@@ -43,7 +43,7 @@ public abstract class BaseFixture
     {
         Console.WriteLine($"Running migration with official image using environment variables. Connection string: {connectionString}");
 
-        // Get the SQL directory path (from bin/Debug/net8.0 to reach solution root)
+        // Get the SQL directory path (from bin/Debug/<net_version> to reach solution root)
         var solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.Parent?.FullName;
         if (string.IsNullOrWhiteSpace(solutionDirectory))
         {

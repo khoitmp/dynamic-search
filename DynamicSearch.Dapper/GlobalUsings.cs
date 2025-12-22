@@ -6,7 +6,8 @@ global using System.Globalization;
 global using System.Collections.Generic;
 global using Microsoft.Extensions.DependencyInjection;
 
-global using Newtonsoft.Json.Linq;
+global using System.Text.Json;
+global using System.Text.Json.Nodes;
 
 global using Kernel.Lib.Constant;
 

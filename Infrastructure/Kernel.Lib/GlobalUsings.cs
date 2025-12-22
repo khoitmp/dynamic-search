@@ -8,8 +8,7 @@ global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Primitives;
 global using Microsoft.Extensions.DependencyInjection;
 
-global using Newtonsoft.Json;
-global using Newtonsoft.Json.Serialization;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
 
-global using Kernel.Lib.Constant;
 global using Kernel.Lib.Interface;

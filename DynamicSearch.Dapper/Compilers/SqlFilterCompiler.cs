@@ -9,11 +9,11 @@ public class SqlFilterCompiler : IFilterCompiler
         SupportOperations = supportOperations;
     }
 
-    public (string Query, ExpandoObject Value) Compile(JObject filter, ref int count)
+    public (string Query, ExpandoObject Value) Compile(JsonObject filter, ref int count)
     {
         if (filter.Count != 1)
         {
-            var queryFilter = filter.ToObject<QueryFilter>(Defaults.JsonSerializer);
+            var queryFilter = JsonSerializer.Deserialize<QueryFilter>(filter, Defaults.JsonSerializerOptions);
 
             if (!SupportOperations.ContainsKey(queryFilter.Operation))
                 throw new NotSupportedException($"{queryFilter.Operation} is not supported");
@@ -37,7 +37,7 @@ public class SqlFilterCompiler : IFilterCompiler
         }
         else
         {
-            var dictionary = filter.ToObject<IDictionary<string, JArray>>(Defaults.JsonSerializer);
+            var dictionary = JsonSerializer.Deserialize<IDictionary<string, JsonArray>>(filter, Defaults.JsonSerializerOptions);
             var listQuery = new List<string>();
             var queryResult = string.Empty;
             var objValue = new ExpandoObject();
@@ -46,7 +46,7 @@ public class SqlFilterCompiler : IFilterCompiler
             {
                 foreach (var value in item.Value)
                 {
-                    var result = Compile(value as JObject, ref count);
+                    var result = Compile(value.AsObject(), ref count);
                     listQuery.Add(result.Query);
                     foreach (var r in result.Value)
                     {

@@ -16,11 +16,11 @@ public class Startup
         services.AddApplicationServices();
         services.AddPersistenceServices();
         services.AddControllers()
-            .AddNewtonsoftJson(option =>
+            .AddJsonOptions(option =>
             {
-                option.SerializerSettings.DateFormatString = Defaults.JsonSerializerSetting.DateFormatString;
-                option.SerializerSettings.ReferenceLoopHandling = Defaults.JsonSerializerSetting.ReferenceLoopHandling;
-                option.SerializerSettings.DateParseHandling = Defaults.JsonSerializerSetting.DateParseHandling;
+                option.JsonSerializerOptions.DefaultIgnoreCondition = Defaults.JsonSerializerOptions.DefaultIgnoreCondition;
+                option.JsonSerializerOptions.PropertyNamingPolicy = Defaults.JsonSerializerOptions.PropertyNamingPolicy;
+                option.JsonSerializerOptions.ReferenceHandler = Defaults.JsonSerializerOptions.ReferenceHandler;
             });
     }
 

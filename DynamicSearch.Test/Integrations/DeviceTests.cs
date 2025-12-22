@@ -3,16 +3,13 @@ namespace DynamicSearch.Test.Integration;
 [Collection("Composite")]
 public class DeviceTests : IClassFixture<CompositeFixture>
 {
-    private readonly ITestOutputHelper _output;
     private readonly TestWebApplicationFactory _factory;
-    private readonly CompositeFixture _compositeFixture;
     private readonly HttpClient _httpClient;
     private readonly string _host = "http://localhost";
     private readonly string _mediaType = "application/json";
 
-    public DeviceTests(ITestOutputHelper output, CompositeFixture compositeFixture)
+    public DeviceTests(CompositeFixture compositeFixture)
     {
-        _output = output;
         _factory = new TestWebApplicationFactory(compositeFixture);
         _httpClient = _factory.CreateClient();
     }
@@ -31,7 +28,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "name" },
             { "queryType", "text" },
@@ -49,7 +46,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "name" },
             { "queryType", "text" },
@@ -67,7 +64,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "name" },
             { "queryType", "text" },
@@ -85,7 +82,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "name" },
             { "queryType", "text" },
@@ -103,7 +100,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "createdUtc" },
             { "queryType", "datetime" },
@@ -121,7 +118,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "createdUtc" },
             { "queryType", "datetime" },
@@ -139,7 +136,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "createdUtc" },
             { "queryType", "datetime" },
@@ -157,7 +154,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "createdUtc" },
             { "queryType", "datetime" },
@@ -175,7 +172,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "type.name" },
             { "queryType", "text" },
@@ -193,7 +190,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "type.name" },
             { "queryType", "text" },
@@ -211,7 +208,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "type.createdUtc" },
             { "queryType", "datetime" },
@@ -229,7 +226,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "type.createdUtc" },
             { "queryType", "datetime" },
@@ -247,7 +244,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "type.name" },
             { "queryType", "text" },
@@ -265,7 +262,7 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
             { "queryKey", "type.name" },
             { "queryType", "text" },
@@ -283,18 +280,18 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
-            { "and", new JArray
+            { "and", new JsonArray
                 {
-                    new JObject
+                    new JsonObject
                     {
                         { "queryKey", "name" },
                         { "queryType", "text" },
                         { "operation", "ew" },
                         { "queryValue", "1" }
                     },
-                    new JObject
+                    new JsonObject
                     {
                         { "queryKey", "type.name" },
                         { "queryType", "text" },
@@ -315,11 +312,11 @@ public class DeviceTests : IClassFixture<CompositeFixture>
     {
         var criteria = new BaseSearchCriteria();
 
-        criteria.Filter = new JObject
+        criteria.Filter = new JsonObject
         {
-            { "or", new JArray
+            { "or", new JsonArray
                 {
-                    new JObject
+                    new JsonObject
                     {
                         { "queryKey", "type.name" },
                         { "queryType", "text" },
@@ -337,9 +334,10 @@ public class DeviceTests : IClassFixture<CompositeFixture>
 
     private async Task<BaseSearchResponse<DeviceDto>> MakeARequestAsync(BaseSearchCriteria criteria)
     {
-        var payload = new StringContent(JsonConvert.SerializeObject(criteria), Encoding.UTF8, mediaType: _mediaType);
+        var payload = new StringContent(JsonSerializer.Serialize(criteria, Defaults.JsonSerializerOptions), Encoding.UTF8, mediaType: _mediaType);
         var response = await _httpClient.PostAsync($"{_host}/dev/devices/search", payload);
         var content = await response.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<BaseSearchResponse<DeviceDto>>(content);
+
+        return JsonSerializer.Deserialize<BaseSearchResponse<DeviceDto>>(content, Defaults.JsonSerializerOptions);
     }
 }

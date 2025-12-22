@@ -35,37 +35,36 @@ public abstract class BaseSearchService<TEntity, TKey, TCriteria, TResponse> : I
 
     public virtual Task<BaseSearchResponse<TResponse>> SearchAsync(TCriteria criteria, IList<FilterCriteria> additionalFilters)
     {
-        var filterArray = new JArray();
+        var filterArray = new JsonArray();
         var originFilter = criteria.Filter;
 
         if (originFilter != null)
         {
-            var originFilterOperation = criteria.Filter.Property(FilterOperations.AND);
-
-            if (originFilterOperation != null)
+            if (criteria.Filter.TryGetPropertyValue(FilterOperations.AND, out var originFilterOperation))
             {
-                var originFilterValues = (JArray)originFilterOperation.Value;
+                var originFilterValues = originFilterOperation.AsArray();
                 foreach (var filterValue in originFilterValues)
                 {
-                    filterArray.Add(filterValue);
+                    filterArray.Add(filterValue.DeepClone());
                 }
             }
             else
             {
-                filterArray.Add(originFilter);
+                filterArray.Add(originFilter.DeepClone());
             }
         }
 
         foreach (var additionalFilter in additionalFilters)
         {
-            filterArray.Add(JObject.FromObject(additionalFilter));
+            filterArray.Add(JsonSerializer.SerializeToNode(additionalFilter, Defaults.JsonSerializerOptions));
         }
 
         if (filterArray.Any())
         {
-            var newFilter = new JObject();
-
-            newFilter[FilterOperations.AND] = filterArray;
+            var newFilter = new JsonObject
+            {
+                [FilterOperations.AND] = filterArray
+            };
 
             criteria.Filter = newFilter;
         }
