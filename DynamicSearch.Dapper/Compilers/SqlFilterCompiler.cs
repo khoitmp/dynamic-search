@@ -13,7 +13,7 @@ public class SqlFilterCompiler : IFilterCompiler
     {
         if (filter.Count != 1)
         {
-            var queryFilter = JsonSerializer.Deserialize<QueryFilter>(filter, Defaults.JsonSerializerOptions);
+            var queryFilter = JsonSerializer.Deserialize<QueryFilter>(filter, JsonSettings.JsonSerializerOptions);
 
             if (!SupportOperations.ContainsKey(queryFilter.Operation))
                 throw new NotSupportedException($"{queryFilter.Operation} is not supported");
@@ -37,7 +37,7 @@ public class SqlFilterCompiler : IFilterCompiler
         }
         else
         {
-            var dictionary = JsonSerializer.Deserialize<IDictionary<string, JsonArray>>(filter, Defaults.JsonSerializerOptions);
+            var dictionary = JsonSerializer.Deserialize<IDictionary<string, JsonArray>>(filter, JsonSettings.JsonSerializerOptions);
             var listQuery = new List<string>();
             var queryResult = string.Empty;
             var objValue = new ExpandoObject();

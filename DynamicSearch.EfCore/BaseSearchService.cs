@@ -56,7 +56,7 @@ public abstract class BaseSearchService<TEntity, TKey, TCriteria, TResponse> : I
 
         foreach (var additionalFilter in additionalFilters)
         {
-            filterArray.Add(JsonSerializer.SerializeToNode(additionalFilter, Defaults.JsonSerializerOptions));
+            filterArray.Add(JsonSerializer.SerializeToNode(additionalFilter, JsonSettings.JsonSerializerOptions));
         }
 
         if (filterArray.Any())

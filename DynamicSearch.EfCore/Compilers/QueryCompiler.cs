@@ -23,7 +23,7 @@ internal class QueryCompiler : IQueryCompiler
                 }
             */
 
-            var filterCriteria = JsonSerializer.Deserialize<FilterCriteria>(filter, Defaults.JsonSerializerOptions);
+            var filterCriteria = JsonSerializer.Deserialize<FilterCriteria>(filter, JsonSettings.JsonSerializerOptions);
 
             if (!SupportedOperations.ContainsKey(filterCriteria.Operation))
             {
@@ -70,7 +70,7 @@ internal class QueryCompiler : IQueryCompiler
                 }
             */
 
-            var dic = JsonSerializer.Deserialize<IDictionary<string, JsonArray>>(filter, Defaults.JsonSerializerOptions);
+            var dic = JsonSerializer.Deserialize<IDictionary<string, JsonArray>>(filter, JsonSettings.JsonSerializerOptions);
             var listQuery = new List<string>();
             var listToken = new List<string>();
             var listValue = new List<object>();

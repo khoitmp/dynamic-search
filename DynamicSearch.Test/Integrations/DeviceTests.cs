@@ -334,10 +334,10 @@ public class DeviceTests : IClassFixture<CompositeFixture>
 
     private async Task<BaseSearchResponse<DeviceDto>> MakeARequestAsync(BaseSearchCriteria criteria)
     {
-        var payload = new StringContent(JsonSerializer.Serialize(criteria, Defaults.JsonSerializerOptions), Encoding.UTF8, mediaType: _mediaType);
+        var payload = new StringContent(JsonSerializer.Serialize(criteria, JsonSettings.JsonSerializerOptions), Encoding.UTF8, mediaType: _mediaType);
         var response = await _httpClient.PostAsync($"{_host}/dev/devices/search", payload);
         var content = await response.Content.ReadAsStringAsync();
 
-        return JsonSerializer.Deserialize<BaseSearchResponse<DeviceDto>>(content, Defaults.JsonSerializerOptions);
+        return JsonSerializer.Deserialize<BaseSearchResponse<DeviceDto>>(content, JsonSettings.JsonSerializerOptions);
     }
 }

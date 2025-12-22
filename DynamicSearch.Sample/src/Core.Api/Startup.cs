@@ -18,9 +18,9 @@ public class Startup
         services.AddControllers()
             .AddJsonOptions(option =>
             {
-                option.JsonSerializerOptions.DefaultIgnoreCondition = Defaults.JsonSerializerOptions.DefaultIgnoreCondition;
-                option.JsonSerializerOptions.PropertyNamingPolicy = Defaults.JsonSerializerOptions.PropertyNamingPolicy;
-                option.JsonSerializerOptions.ReferenceHandler = Defaults.JsonSerializerOptions.ReferenceHandler;
+                option.JsonSerializerOptions.DefaultIgnoreCondition = JsonSettings.JsonSerializerOptions.DefaultIgnoreCondition;
+                option.JsonSerializerOptions.PropertyNamingPolicy = JsonSettings.JsonSerializerOptions.PropertyNamingPolicy;
+                option.JsonSerializerOptions.ReferenceHandler = JsonSettings.JsonSerializerOptions.ReferenceHandler;
             });
     }
 

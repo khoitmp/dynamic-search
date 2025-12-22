@@ -1,6 +1,6 @@
 namespace Kernel.Lib.Constant;
 
-public static class Defaults
+public static class JsonSettings
 {
     private static JsonSerializerOptions _jso = new JsonSerializerOptions
     {
